@@ -28,35 +28,38 @@ public class Mammal {
             return;}
 //methods
     public void eat(){
-        System.out.println("The " + this.name + "is now eating...");
+        System.out.println("The " + this.name + " is now eating...");
         return;}
     public void sleep() throws Exception{
-        int sleepTime = 500;
-        System.out.println("The " + this.name + "is sleeping and will wake up in " + sleepTime/1000);
+        int sleepTime = 5000;
+        System.out.println("The " + this.name + " is sleeping and will wake up in " + sleepTime/1000);
         Thread.sleep(sleepTime);
         System.out.println("The " + this.name + " is now awake");
         return;}
     public void run(){
-        System.out.println("The " + this.name + "is now running...");
+        System.out.println("The " + this.name + " is now running...");
         return;}
     public void scratch(){
-        System.out.println("The " + this.name + "is now scratching with it's " + this.numberoflegs + "legs...");
+        System.out.println("The " + this.name + " is now scratching with it's " + this.numberoflegs + "legs...");
         return;}
     public void drink(){
-        System.out.println("The " + this.name + "is now drinking water...");
+        System.out.println("The " + this.name + " is now drinking water...");
         return;}
     public void jump(){
-        System.out.println("The " + this.name + "is now jumping on it's " + this.numberoflegs + "legs.");
+        System.out.println("The " + this.name + " is now jumping on it's " + this.numberoflegs + " legs.");
         return;}
     public void look(){
-        System.out.println("The " + this.name + "is now looking with it's" + this.eyeColor + "eyes.");
+        System.out.println("The " + this.name + " is now looking with it's " + this.eyeColor + " eyes.");
         return;}
     public void weighs(){
-        System.out.println("The " + this.name + "weighs " + this.weight + "pounds.");
+        System.out.println("The " + this.name + " weighs " + this.weight + " pounds.");
         return;}
     public void begs(){
-        System.out.println("The " + this.name + "looks up at you with it's " + this.eyeColor + "eyes begging for food.");
+        System.out.println("The " + this.name + " looks up at you with it's " + this.eyeColor + " eyes begging for food.");
         return;}
-
-
+    public void getMammalDetails(){
+        System.out.println("The Mammal is named " + this.name + " the mammal's hair color is " + this.hairColor + " the mamal's eye color is " + this.eyeColor + ". The body tempature is " + this.bodyTemp + " and the mammal weighs " + this.weight + " with " +this.numberoflegs + " number of legs.");
+        return;}
+    
+        
 }

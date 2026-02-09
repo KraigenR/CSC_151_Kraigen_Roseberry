@@ -57,6 +57,16 @@ public class Mammal {
     public void begs(){
         System.out.println("The " + this.name + "looks up at you with it's " + this.eyeColor + "eyes begging for food.");
         return;}
-
-
+        public void getMammalDetails(){
+        System.out.println("The Mammal is named " + this.name + " the mammal's hair color is " + this.hairColor + " the mamal's eye color is " + this.eyeColor + ". The body tempature is " + this.bodyTemp + " and the mammal weighs " + this.weight + " with " +this.numberoflegs + " number of legs.");
+        return;}
+    public void sit() throws Exception{
+    int sitTime = 15000;
+    System.out.println ("The " + this.name + " is now sitting for " + sitTime/1000 + " seconds.");
+    Thread.sleep(sitTime);
+    System.out.println (this.name + " is no longer sitting.");
+    stand();}
+    public void stand(){ 
+    System.out.println (this.name + " stands up and starts barking.");
+    return;}
 }

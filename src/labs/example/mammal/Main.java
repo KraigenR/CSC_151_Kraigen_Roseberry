@@ -10,12 +10,16 @@ public class Main {
         myMammal.setbodyTemp("90");
         myMammal.setweight("70");
         myMammal.setnumberoflegs("4");
-    try {
-        myMammal.sit()}
-    catch (Exception e) {
-        e.printStackTrace();}
+    // ------- Commenting out the sit call to test the walk.
+    //try {
+    //    myMammal.sit();}
+    //catch (Exception e) {
+    //    e.printStackTrace();}
     //Exception is thrown from the Mammal.java file and caught in Main.java. When exception is thrown we are naming it "e".
     //printStackTrace gives us a list of eror information which is more helpful than the println.
-    myMammal.getMammalDetails();    
+    // ---- Commenting out the get details for the walk test. 
+    //myMammal.getMammalDetails();    
+    //trying out the go for a walk from Mammal.java
+    myMammal.goforawalk();
     }
 }

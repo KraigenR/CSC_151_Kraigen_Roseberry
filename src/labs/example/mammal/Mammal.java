@@ -58,7 +58,7 @@ public class Mammal {
         return;}
     // Week 3 Lab additions
     public void sit() throws Exception{
-        int sitTime = 15000;
+        int sitTime = 1; //changed time from 15000 to 1 just to shorten testing time.
         System.out.println ("The " + this.name + " is now sitting for " + sitTime/1000 + " seconds.");
         Thread.sleep(sitTime);
         System.out.println (this.name + " is no longer sitting.");
@@ -67,7 +67,7 @@ public class Mammal {
         System.out.println (this.name + " stands up and starts barking.");
         return;}
     public void getMammalDetails(){
-        System.out.println("The Mammal is named " + this.name + " the mammal's hair color is " + this.hairColor + " the mamal's eye color is " + this.eyeColor + ". The body tempature is " + this.bodyTemp + " and the mammal weighs " + this.weight + " with " +this.numberoflegs + " number of legs.");
+        System.out.println("The Mammal is named " + this.name + " the mammal's hair color is " + this.hairColor + " the mammal's eye color is " + this.eyeColor + ". The body tempature is " + this.bodyTemp + " and the mammal weighs " + this.weight + " with " +this.numberoflegs + " number of legs.");
         return;}
     // Week 4 Lab
     public int walk(int miles){

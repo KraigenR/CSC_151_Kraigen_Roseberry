@@ -64,7 +64,7 @@ public class Mammal {
         System.out.println (this.name + " is no longer sitting.");
     stand();}
     public void stand(){ 
-        System.out.println (this.name + " stands up and starts barking.");
+        System.out.println (this.name + " stands up.");
         return;}
     public void getMammalDetails(){
         System.out.println("The Mammal is named " + this.name + " the mammal's hair color is " + this.hairColor + " the mammal's eye color is " + this.eyeColor + ". The body tempature is " + this.bodyTemp + " and the mammal weighs " + this.weight + " with " +this.numberoflegs + " number of legs.");

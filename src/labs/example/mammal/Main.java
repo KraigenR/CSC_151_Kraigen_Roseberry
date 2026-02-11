@@ -3,7 +3,8 @@ package labs.example.mammal;
 public class Main {
     public static void main(String[] args) throws Exception {
         Mammal myMammal = new Mammal();
-        // Moved the setter values to the Main file as the setters were fixed within the Mammal.java file. 
+        // Moved the setter values to the Main file as the setters were fixed within the Mammal.java file.
+        // generic Mammal settings.  
         myMammal.setName("Bob");
         myMammal.sethairColor("Brown");
         myMammal.seteyeColor("Green");
@@ -20,6 +21,18 @@ public class Main {
     // ---- Commenting out the get details for the walk test. 
     //myMammal.getMammalDetails();    
     //trying out the go for a walk from Mammal.java
-    myMammal.goforawalk();
-    }
+    // commenting out the go for a walk method.\
+    //---- myMammal.goforawalk();
+    //---- }
+
+
+    // creating specifically a dog mammal. 
+    Dog aDog = new Dog();
+    aDog.setName ("Largo");
+    aDog.sethairColor ("Brown and White");
+    aDog.seteyeColor ("Brown");
+    aDog.setbodyTemp ("100");
+    aDog.setweight ("60");
+    aDog.setnumberoflegs ("4");
+}
 }

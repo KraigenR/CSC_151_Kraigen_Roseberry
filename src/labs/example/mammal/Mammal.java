@@ -9,22 +9,22 @@ public class Mammal {
     protected String numberoflegs;
 
     public void setName(String name){
-            this.name = "Bob";
+            this.name = name;
             return;}
     public void sethairColor(String hairColor){
-            this.hairColor = "Brown";
+            this.hairColor = hairColor;
             return;}
     public void seteyeColor(String eyeColor){
-            this.eyeColor = "Green";
+            this.eyeColor = eyeColor;
             return;}
     public void setbodyTemp(String bodyTemp){
-            this.bodyTemp = "90";
+            this.bodyTemp = bodyTemp;
             return;}
     public void setweight(String weight){
-            this.weight = "100";
+            this.weight = weight;
             return;}
     public void setnumberoflegs(String numberoflegs){
-            this.numberoflegs = "4";
+            this.numberoflegs = numberoflegs;
             return;}
 //methods
     public void eat(){

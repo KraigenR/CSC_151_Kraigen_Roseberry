@@ -32,30 +32,33 @@ public class Mammal {
         return;}
     public void sleep() throws Exception{
         int sleepTime = 500;
-        System.out.println("The " + this.name + "is sleeping and will wake up in " + sleepTime/1000);
-        System.out.println("The " + this.name + " is now eating...");
+        System.out.println("The " + this.name + " is sleeping and will wake up in " + sleepTime/1000);
         return;}
     public void run(){
-        System.out.println("The " + this.name + "is now running...");
+        System.out.println("The " + this.name + " is now running...");
         return;}
     public void scratch(){
-        System.out.println("The " + this.name + "is now scratching with it's " + this.numberoflegs + "legs...");
+        System.out.println("The " + this.name + " is now scratching with it's " + this.numberoflegs + "legs...");
         return;}
     public void drink(){
-        System.out.println("The " + this.name + "is now drinking water...");
+        System.out.println("The " + this.name + " is now drinking water...");
         return;}
     public void jump(){
-        System.out.println("The " + this.name + "is now jumping on it's " + this.numberoflegs + "legs.");
+        System.out.println("The " + this.name + " is now jumping on it's " + this.numberoflegs + "legs.");
         return;}
     public void look(){
-        System.out.println("The " + this.name + "is now looking with it's" + this.eyeColor + "eyes.");
+        System.out.println("The " + this.name + " is now looking with it's" + this.eyeColor + "eyes.");
         return;}
     public void weighs(){
-        System.out.println("The " + this.name + "weighs " + this.weight + "pounds.");
+        System.out.println("The " + this.name + " weighs " + this.weight + " pounds.");
         return;}
     public void begs(){
-        System.out.println("The " + this.name + "looks up at you with it's " + this.eyeColor + "eyes begging for food.");
+        System.out.println("The " + this.name + " looks up at you with it's " + this.eyeColor + " eyes begging for food.");
         return;}
+    // adding bark method which can only be used by dog.
+    //public void bark(){
+        //System.out.println(this.name + " Barks. woof...woof");
+        //return;}
     // Week 3 Lab additions
     public void sit() throws Exception{
         int sitTime = 1; //changed time from 15000 to 1 just to shorten testing time.

@@ -34,5 +34,18 @@ public class Main {
     aDog.setbodyTemp ("100");
     aDog.setweight ("60");
     aDog.setnumberoflegs ("4");
+
+    // inheriting methods from Mammal.java and using them with the dog.
+    aDog.eat();
+    aDog.sleep();
+    aDog.run();
+    aDog.scratch();
+    aDog.drink();
+    aDog.jump();
+    aDog.look();
+    aDog.weighs();
+    aDog.begs();    
+    // now using bark only for the dog.
+    aDog.bark();
 }
 }

@@ -20,4 +20,8 @@ public class Physics {
         return 0.5 * mass * Math.pow(velocity, 2);}
     public double getPotentialEnergy(double mass, double height) {
         return mass * GRAVITY * height;}
-}
+    public double logInvalidAngleInfo(double angleDegrees){
+        System.out.println(" logging the angle " + thetaDegrees + " degrees. This is not a right angle.");}
+    public double logValidAngleInfo(double angleDegrees){
+        System.out.println(" logging the angle " + thetaDegrees + "this is a valid 3-4-5 triangle:");}
+                    }

@@ -79,7 +79,7 @@ public class Mammal {
     public void goforawalk(){
         int south = walk(3); //south
         int east = walk(4);  //east
-        double distance = Math.sqrt(Math.pow(south, 2) + Math.pow(east, 2));
+        double distance = Math.sqrt(Math.pow(south, 3) + Math.pow(east, 4));
         System.out.println("The distance from the start to " + this.name + "'s location is " + distance + " miles.");
         double thetaRadians = Math.atan2(south, east);
         double thetaDegrees = Math.toDegrees(thetaRadians);

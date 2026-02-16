@@ -1,7 +1,7 @@
 package labs.example.physics;
 
 public class Main {
- public static void main (String[] args)                                        {
+ public static void main (String[] args)                                         {
     Physics physics = new Physics();
     //getting Distance 
         double distance = physics.getDistance(50, 2);
@@ -24,5 +24,12 @@ public class Main {
     //getting Potential Energy
         double potentialEnergy = physics.getPotentialEnergy(30, 2);
         System.out.println("Potential Energy is " + potentialEnergy + " Joules");
+        public void trackangle(){
+        int lengthone = (3);//first portion of the angle add your value here
+        int lengthtwo = (4);//second portion of the angle add your value here 
+        double thetaRadians = Math.atan2(lengthone, lengthtwo);
+        double thetaDegrees = Math.toDegrees(thetaRadians);
+        if (thetaDegrees < 36.87 | | thetaDegrees > 37.00) 
+             {physics.logInvalidAngleInfo(thetaDegrees);}
+        else { physics.logValidAngleInfo(thetaDegrees);}}
                                                                                 }
-                    }

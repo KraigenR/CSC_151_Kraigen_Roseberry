@@ -2,9 +2,9 @@ package labs.example.physics;
 
 import java.lang.Math;
 
-public class physics {
+public class Physics {
     //setting up the gravrity class
-    final double gravity = 9.81;
+    final static double GRAVITY = 9.81;
     // adding the methods and equations
      public double getDistance(double velocity, double time) {
         return velocity * time;}
@@ -19,5 +19,5 @@ public class physics {
     public double getKineticEnergy(double mass, double velocity) {
         return 0.5 * mass * Math.pow(velocity, 2);}
     public double getPotentialEnergy(double mass, double height) {
-        return mass * gravity * height;}
+        return mass * GRAVITY * height;}
 }

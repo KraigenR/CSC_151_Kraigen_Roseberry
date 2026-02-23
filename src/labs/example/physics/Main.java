@@ -37,8 +37,8 @@ public class Main {
         {physics.logValidAngleInfo(angleDegrees);}
 
         // Part 2 of lab
-        double lightSpeed = physics.getLightSpeedInMPH();
-        double timeToEarth = physics.getTimeFromSunToEarthInHours();
+        double lightSpeed = physics.getLightSpeedInMPH(); //pulling from physics.java where Lightspeed is set
+        double timeToEarth = physics.getTimeFromSunToEarthInHours(); //physics.java sets value for time from sun
         double calculatedDistance = physics.getDistance(lightSpeed, timeToEarth);
         System.out.println("Calculated distance from the Earth to the Sun " + calculatedDistance + " miles");
         double knownDistance = physics.getKnownDistanceToEarth();

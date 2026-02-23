@@ -76,12 +76,13 @@ public class Mammal {
     public int walk(int miles){
         System.out.println(this.name + " walks " + miles + " miles.");
         return miles;}
-    public void goforawalk(){
+    public double goforawalk(){ //needed to change the void to double to be able to return the distance of the walk.
         int south = walk(3); //south
         int east = walk(4);  //east
         double distance = Math.sqrt(Math.pow(south, 3) + Math.pow(east, 4));
         System.out.println("The distance from the start to " + this.name + "'s location is " + distance + " miles.");
         double thetaRadians = Math.atan2(south, east);
         double thetaDegrees = Math.toDegrees(thetaRadians);
-        System.out.println("The angle of the walk is: " + thetaDegrees + " degrees.");}
+        System.out.println("The angle of the walk is: " + thetaDegrees + " degrees.");
+        return thetaDegrees;} //was missing the return statment which is why I changed it from void to double.
 }

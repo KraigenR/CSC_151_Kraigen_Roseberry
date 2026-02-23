@@ -27,4 +27,10 @@ public class physics {
         System.out.println(" logging the angle " + angleDegrees + " degrees. This is not a right angle.");}
     public void logValidAngleInfo(double angleDegrees){
         System.out.println(" logging the angle " + angleDegrees + " degrees. This is a valid 3-4-5 triangle.");}
+    // Part 2 of lab
+    public double getLightSpeedInMPH() {return 670_616_629;}// mph
+    public double getTimeFromSunToEarthInHours() {return 0.1383;}  // 8.3 minutes converted to hours
+    public double getKnownDistanceToEarth() {return 93_000_000;}  // miles
+    public void logEarthToSunInvalidDistance(double calculatedDistance) {
+    System.out.println("The calculated distance of " + calculatedDistance + " miles is invalid compared to the known Earth-Sun distance.");}
                     }

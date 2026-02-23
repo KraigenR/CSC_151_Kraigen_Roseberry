@@ -35,5 +35,17 @@ public class Main {
         physics.logInvalidAngleInfo(angleDegrees);} 
         else 
         {physics.logValidAngleInfo(angleDegrees);}
+
+        // Part 2 of lab
+        double lightSpeed = physics.getLightSpeedInMPH();
+        double timeToEarth = physics.getTimeFromSunToEarthInHours();
+        double calculatedDistance = physics.getDistance(lightSpeed, timeToEarth);
+        System.out.println("Calculated distance from the Earth to the Sun " + calculatedDistance + " miles");
+        double knownDistance = physics.getKnownDistanceToEarth();
+        if (calculatedDistance == knownDistance) {
+        System.out.println("The calculated distance matches the known distance.");}
+        else {physics.logEarthToSunInvalidDistance(calculatedDistance);}
+        
+
     }
 }

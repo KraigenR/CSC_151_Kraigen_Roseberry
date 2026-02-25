@@ -34,4 +34,4 @@ public class physics {
     public double getKnownDistanceToEarth() {return 93_000_000;}  // miles
     public void logEarthToSunInvalidDistance(double calculatedDistance) {
     System.out.println("The calculated distance of " + calculatedDistance + " miles is invalid compared to the known Earth-Sun distance.");}
-                    }
+                        }

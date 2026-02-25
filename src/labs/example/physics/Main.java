@@ -25,12 +25,17 @@ public class Main {
         double potentialEnergy = physics.getPotentialEnergy(30, 2);//mass and height
         System.out.println("Potential Energy is " + potentialEnergy + " Joules");
 
+       
+       // Go back and rewrite this using the 
         //caculating the angle of a triangle
         int lengthone = (3);//first portion of the angle add your value here
         int lengthtwo = (4);//second portion of the angle add your value here
-        double thetaRadians = Math.atan2(lengthone, lengthtwo);
-        double angleDegrees = Math.toDegrees(thetaRadians);
-        //double angleDegrees = physics.calculateAngle(lengthone, lengthtwo);
+        //-----double thetaRadians = Math.atan2(lengthone, lengthtwo); // this finds the Radians first
+        //-----double angleDegrees = Math.toDegrees(thetaRadians); // this then uses the internal math.pi to convert the radians to degrees. 
+        //-----public static double getTheta(int lengthone, int lengthtwo){
+        //-----double angleDegrees = Math.atan2(lengthone,lengthtwo) * 180/3.14152; //this returns the radians then uses the 180/3.14152 to get degrees.
+        //-----return theta;}
+        double angleDegrees = physics.calculateAngle(lengthone, lengthtwo); //we're now manually converting radians to degrees when using the caculateAngle method inside physcis.java
         if (angleDegrees > 37.00 || angleDegrees < 36.87) {
         physics.logInvalidAngleInfo(angleDegrees);} 
         else 

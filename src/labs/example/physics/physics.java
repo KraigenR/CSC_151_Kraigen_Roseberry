@@ -21,8 +21,9 @@ public class physics {
     public double getPotentialEnergy(double mass, double height) {
         return mass * GRAVITY * height;}
     public double calculateAngle(int lengthone, int lengthtwo) { //using calcuate angle to find the angle using the two lengths. 
-        double thetaRadians = Math.atan2(lengthone, lengthtwo);
-        return Math.toDegrees(thetaRadians);}    
+        double thetaRadians = Math.atan2(lengthone, lengthtwo) * 180/3.14152; // adding * 180/3.14152 to manually convert radians to degrees 
+        return thetaRadians;}
+        //return Math.toDegrees(thetaRadians);}  // this is no longer needed as we are turning radians to degrees manually now.   
     public void logInvalidAngleInfo(double angleDegrees){
         System.out.println(" logging the angle " + angleDegrees + " degrees. This is not a right angle.");}
     public void logValidAngleInfo(double angleDegrees){

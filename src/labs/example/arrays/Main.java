@@ -3,7 +3,7 @@ package labs.example.arrays;
 public class Main {
     public static void main(String[] args) { 
         ArrayOperations ops = new ArrayOperations(); // we are instantiating the ArrayOperations class so we can call the methods in it
-        ops.createNewArray(5); // we are calling the createNewArray method from step 1 and using 5 as the argument 
+        ops.createNewArray(5); // Adjust this value to change the size of the array, we are calling the createNewArray method from step 1 and using 5 as the argument 
         ops.getDaysAndMonths(); // we are calling the getDaysAndMonths method to print the number of days in each month
         int[] unsortedarray = new int[50]; // creating array called unsortedarray, setting it's size to 50
             for (int i = 0; i < unsortedarray.length; i++) { // using a for loop to process the array and fill with random numbers, running until it's less than 50 since that's the size of the array

@@ -2,7 +2,7 @@ package labs.example.arrays;
 
 public class ArrayOperations {
     public void createNewArray(int value){ //this method creates a new array and uses the parameter as the starting value
-        int[] array1 = new int[10]; // we are creating an array of integers called array1 and setting the size to 10
+        int[] array1 = new int[value]; // Adjust value in Main.java to change array size. we are creating an array of integers called array1 and setting the size to the value passed in the method
         //int a = 0; // we are initializing a to 0 to within the loop to use as the index for the array, however just in case we want to use a outside of the loop we can initialize it here
         for (int a = 0; a < array1.length; a++) { // using a for loop to go through the array and set each value equal to the index value so array1[0] should be 0, array1[1] should be 1. The loop will run until it's less than 10
         array1[a] = value + a; // setting value of each index in the array to be equal to the value in the method + the index value. So if 5 is set in the main method, array1[0] will be 5, array1[1] will be 6, array1[2] will be 7, and so on

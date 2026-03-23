@@ -1,0 +1,31 @@
+public class Mod10Check {
+    public static void main(String[] args) {
+        String creditCardNumber = "4539578763621486"; // sample Visa Credit Card number to check
+        int sum = 0; // variable to hold the sum of the digits after processing
+
+        // loop through the credit card number from right to left
+        for (int a = creditCardNumber.length() - 1; a >= 0; a--) { // we are starting at the last index of the credit card number and moving backwards to the first index
+            int digit = Character.getNumericValue(creditCardNumber.charAt(a)); // converting the character at index a to a numeric value so we can do math with it
+
+            // double every second digit from the right
+            if ((creditCardNumber.length() - 1 - a) % 2 == 1) { // we are doubling every second digit from the right, so we check if the index from the right is odd. We use creditCardNumber.length() - 1 - a to get the index from the right
+                int doubled = digit * 2; // we are doubling the digit
+                if (doubled > 9) { // if the doubled value is more than 9 we need to add the two digits together
+                    // add the two digits of the doubled number
+                    digit = (doubled / 10) + (doubled % 10); // we are taking the doubled # diving by 10 to get our first digit then using mod 10 to get the second digit and adding them together to get the final value of digit
+                } else {
+                    digit = doubled; // if the doubled value is not more than 9 then we can just set digit equal to the doubled value
+                }
+            }
+
+            sum += digit; // we are adding the value of digit to our sum variable which will hold the total sum of all the processed digits
+        }
+
+        // check validity of our credit card number
+        if (sum % 10 == 0) { // if the sum of our processed digits mod 10s to equal 0 then the credit card number is valid
+            System.out.println("Credit Card " + creditCardNumber + " is valid.");
+        } else {
+            System.out.println("Credit Card " + creditCardNumber + " is not valid.");
+        }
+    }
+}

@@ -1,0 +1,44 @@
+public class ArraySums {
+    public static void main(String[] args) {
+        int[] arr1 = {1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5};
+        int[] arr2 = {5,4,3,2,1,10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1};
+        int[] arr3 = {2,4,6,8,10,1,3,5,7,9,2,4,6,8,10,1,3,5,7,9,2,4,6,8,10};
+
+        int sumArr1 = 0; // creating a variable to hold the sum of arr1, starting at 0 because we will be adding to it
+        int sumArr2 = 0; // creating a variable to hold the sum of arr2
+        int sumArr3 = 0; // creating a variable to hold the sum of arr3
+
+        //Array 1 sum
+        for (int a = 0; a < arr1.length; a++) { // using a for loop to go through arr1 and add each value to sumArr1. We are using arr1.length as the condition so we go through the whole array
+            sumArr1 += arr1[a]; // adding the value of each index in arr1 to sumArr1
+        } // closing for loop for arr1
+
+        //Array 2 sum
+        for (int a = 0; a < arr2.length; a++) { // same as above but for arr2
+            sumArr2 += arr2[a]; // sane as above but for arr2
+        } // closing for loop for arr2
+
+        //Array 3 sum
+        for (int a = 0; a < arr3.length; a++) { // same as above but for arr3
+            sumArr3 += arr3[a]; // same as above but for arr3
+        } // closing for loop for arr3
+
+        // printing our arrays and their sums
+        System.out.println("Sum of array 1: " + sumArr1);
+        System.out.println("Sum of array 2: " + sumArr2);
+        System.out.println("Sum of array 3: " + sumArr3);
+
+        // finding the largest sum
+        int maxSum = sumArr1;
+        String maxarray = "arr1";
+        if (sumArr2 > maxSum) { // comparing sumArr2 to maxSum and if it's greater we set maxSum equal to sumArr2 and maxarray equal to "arr2"
+            MaxSum = sumArr2;
+            MaxArray = "arr2";
+        } // closing if statement for sumArr2
+        if (sumArr3 > maxSum) { // comparing sumArr3 to maxSum and if it's greater we set maxSum equal to sumArr3 and maxarray equal to "arr3"
+            MaxSum = sumArr3;
+            MaxArray = "arr3";
+        } // closing if statement for sumArr3
+        System.out.println("The array with the largest sum is " + MaxArray + " with a sum of " + MaxSum); // printing the array with the largest sum and the value of that sum
+    } // closing main method
+} // closing ArraySums class

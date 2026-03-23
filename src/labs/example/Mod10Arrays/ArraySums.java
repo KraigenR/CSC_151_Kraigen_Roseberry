@@ -1,7 +1,8 @@
+package labs.example.Mod10Arrays;
 public class ArraySums {
     public static void main(String[] args) {
         int[] arr1 = {1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5};
-        int[] arr2 = {5,4,3,2,1,10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1};
+        int[] arr2 = {5,9,3,2,1,10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1};
         int[] arr3 = {2,4,6,8,10,1,3,5,7,9,2,4,6,8,10,1,3,5,7,9,2,4,6,8,10};
 
         int sumArr1 = 0; // creating a variable to hold the sum of arr1, starting at 0 because we will be adding to it
@@ -30,15 +31,15 @@ public class ArraySums {
 
         // finding the largest sum
         int maxSum = sumArr1;
-        String maxarray = "arr1";
-        if (sumArr2 > maxSum) { // comparing sumArr2 to maxSum and if it's greater we set maxSum equal to sumArr2 and maxarray equal to "arr2"
-            MaxSum = sumArr2;
-            MaxArray = "arr2";
+        String maxArray = "arr1";
+        if (sumArr2 > maxSum) { // comparing sumArr2 to maxSum and if it's greater we set maxSum equal to sumArr2 and maxArray equal to "arr2"
+            maxSum = sumArr2;
+            maxArray = "arr2";
         } // closing if statement for sumArr2
-        if (sumArr3 > maxSum) { // comparing sumArr3 to maxSum and if it's greater we set maxSum equal to sumArr3 and maxarray equal to "arr3"
-            MaxSum = sumArr3;
-            MaxArray = "arr3";
+        if (sumArr3 > maxSum) { // comparing sumArr3 to maxSum and if it's greater we set maxSum equal to sumArr3 and maxArray equal to "arr3"
+            maxSum = sumArr3;
+            maxArray = "arr3";
         } // closing if statement for sumArr3
-        System.out.println("The array with the largest sum is " + MaxArray + " with a sum of " + MaxSum); // printing the array with the largest sum and the value of that sum
+        System.out.println("The array with the largest sum is " + maxArray + " with a sum of " + maxSum); // printing the array with the largest sum and the value of that sum
     } // closing main method
 } // closing ArraySums class

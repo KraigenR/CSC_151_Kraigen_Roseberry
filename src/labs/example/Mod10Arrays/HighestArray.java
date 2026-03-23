@@ -1,6 +1,7 @@
+package labs.example.Mod10Arrays;
 public class HighestArray {
     public static void main(String[] args) {
-        int[] myArray = { // creatomg int myArray and filling it with 100 values to find the highest value in the array
+        int[] myArray = { // creatomg int myArray and filling it with 50 values to find the highest value in the array, just change the values in the array to find the highest value in a different set of numbers
             12, 45, 67, 34, 89, 23, 56, 78, 90, 11,
             22, 33, 44, 55, 66, 77, 88, 99, 100, 101,
             5, 10, 15, 20, 25, 30, 35, 40, 50, 60,
@@ -8,7 +9,7 @@ public class HighestArray {
             1, 2, 3, 4, 6, 7, 8, 9, 13, 14
         }; // close array initialization
         int maxValue = myArray[0]; // we are initializing maxValue to the first value in the array so we have a starting point for comparison
-
+       
         // looping through the array to find the highest value
         for (int a= 1; a < myArray.length; a++) { // we are starting at index 1 because we already have index 0 as our initial maxValue. We are using myArray.length as the condition so we go through the whole array
             if (myArray[a] > maxValue) { // if the value at the current index is greater than maxValue then we set maxValue equal to that value
@@ -16,6 +17,6 @@ public class HighestArray {
             } // close if statement
         } // close for loop
 
-        System.out.println("The highest value in the myArray object is: " + maxValue); // printing the highest value in the array after we have looped through it and found the maxValue
+        System.out.println("The highest value in the myArray object is: " + maxValue); // printing the highest value in the array after we have looped through it and found the maxValu
     }
 }

@@ -1,3 +1,4 @@
+package labs.example.Mod10Arrays;
 public class CompareArrays { 
     public static void main(String[] args) {
         int[] firstArray = {1, 2, 3, 4, 5}; // establishing two arrays to compare

@@ -1,3 +1,4 @@
+package labs.example.Mod10Arrays;
 public class Mod10Check {
     public static void main(String[] args) {
         String creditCardNumber = "4539578763621486"; // sample Visa Credit Card number to check

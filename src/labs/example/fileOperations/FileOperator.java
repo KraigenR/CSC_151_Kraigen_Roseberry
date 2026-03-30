@@ -47,6 +47,9 @@ public class FileOperator {
             count++; // Incrementing the count for each number processed
         } // close the for loop for processing the numbers
 
+        if (count == 0) { // in case there are no grades to process, we want to avoid a division by zero error when calculating the average, so we check if count is zero and if so, throw an exception to be caught in the main method and logged
+            throw new IllegalArgumentException("No valid grades found"); // If there are no valid numbers to process, throw an exception to be caught in the main method and logged
+        }
         double average = sum / count; // Calculate the average and print the result 
 
         System.out.printf("%s: %.2f%n", name, average); //Rounding to two decimal places. %s print's the name. %.2f prints the average with two decimal places and %n makes a new line similar to \n. 

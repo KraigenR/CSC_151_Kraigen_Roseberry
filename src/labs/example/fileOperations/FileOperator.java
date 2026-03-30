@@ -42,9 +42,10 @@ public class FileOperator {
             count++; // Incrementing the count for each number processed
         }
 
-        double average = sum / count; // Calculate the average and print the result in the format "name: average"
+        double average = sum / count; // Calculate the average and print the result 
 
-        System.out.println(name + ": " + average); 
+        System.out.printf("%s: %.2f%n", name, average);; //Rounding to two decimal places. %s print's the name. %.2f prints the average with two decimal places and %n makes a new line similar to \n. 
+        // I decided to use the printf method to format the output to show the name and the average with two decimal places for better readability. I pulled it from my Java for dumies book and it seemed to be the best to do it without importanting additional libraries.
     }
 
     private static void createLogFileIfNotExists(String logFile) { 

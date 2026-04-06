@@ -4,28 +4,37 @@ import java.util.*;
 
 public class FileOperator {
 
+    private static final String BASE_PATH = "src/labs/example/fileOperations/"; // Base path for file input and output
     public static void main(String[] args) {
 
-        String inputFile = "src/labs/example/fileOperations/files/users.csv"; // Path to the input CSV file
-        String logFile = "src/labs/example/fileOperations/logs/csv_error.log"; // Path to the log file for errors
+        String inputFile = BASE_PATH + "files/users.csv"; // Path to the input CSV file
+        String logFile = BASE_PATH + "logs/csv_error.log"; // Path to the log file for errors
+        String apiLogFile = BASE_PATH + "logs/api_error.log"; // Path to the log file for API errors
 
-        // Checking if the log file exists, if not, create it
+        // Checking if the log file exists and api log file exists, if not, create them
         createLogFileIfNotExists(logFile);
+        createLogFileIfNotExists(apiLogFile);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) { // Try with resources to ensure the reader is closed
 
             String line; // Read the file line by line
 
+            reader.readLine(); // Skip the header line of the CSV file
+
             while ((line = reader.readLine()) != null) { // Process each line of the CSV file using the processLine method
                 try {
                     processLine(line); // Process the line and if an exception occurs, log the error
-                } catch (Exception e) { 
-                    logError(logFile, "Error processing line: " + line); // Log the error with the line that caused it
-                } // close the try block for processing the line
+                } catch (NumberFormatException e) { // Catching NumberFormatException that may occur if there is an issue parsing a number in the processLine method, and logging those errors with the line that caused them
+                    logError(logFile, "[CSV ERROR] Number format error: " + line + " | " + e.getMessage()); // same as above but for number format
+                } catch (IllegalArgumentException e) { // Catching specific exceptions that we throw in the processLine method for invalid data formats and no valid grades found, and logging those errors with the line that caused them
+                    logError(logFile, "[CSV ERROR] Invalid data: " + line + " | " + e.getMessage()); // Logging illegal argument exceptions
+                } catch (Exception e) { // Catching any other exceptions that may occur during processing of a line and logging those errors with the line that caused them
+                    logError(apiLogFile, "[SYSTEM ERROR] Line: " + line + " | " + e.getMessage()); // Logging any other exceptions that may occur during processing of a line to the API log file
+                }
             } // close the while loop for reading lines
 
         } catch (IOException e) { // checking for IOException when trying to read the file and log the error if it occurs
-            logError(logFile, "Failed to read users.csv file."); // Log the error if the file cannot be read
+            logError(apiLogFile, "[SYSTEM ERROR] Failed to read users.csv file: " + e.getMessage()); // Log the error if the file cannot be read
         } // close the try block for reading the file
     } // close the main method
 

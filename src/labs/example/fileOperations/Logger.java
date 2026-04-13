@@ -131,7 +131,7 @@ public class Logger {
 
                     if (endpoints.contains(endpoint)) { // Check if the endpoint is already in our list of endpoints, if it is, we need to increment the count for that endpoint
                         int i = endpoints.indexOf(endpoint); // Find the index of the endpoint in the endpoints list
-                        counts.set(i, counts.get(i) + 1); // Increment the count for that endpoint by 1 by getting the current count at index i from the counts list and adding 1 to it, then setting that new value back at index i in the counts list
+                        counts.set(i, counts.get(i) + 1); // Increment the count for this endpoint
                     } else { // If the endpoint is not already in our list of endpoints, we need to add it to the list and initialize its count to 1
                         endpoints.add(endpoint); // Add the new endpoint to the endpoints list
                         counts.add(1); // Add a count of 1 for this new endpoint to the counts list, since we have encountered it once in the log entry that we are currently processing

@@ -1,5 +1,6 @@
 package labs.example.fileOperations;
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 
 public class FileOperator {
@@ -7,19 +8,22 @@ public class FileOperator {
     private static final String BASE_PATH = "src/labs/example/fileOperations/"; // Base path for file input and output
     public static void main(String[] args) {
 
-        String inputFile = BASE_PATH + "files/users.csv"; // Path to the input CSV file
-        String logFile = BASE_PATH + "logs/csv_error.log"; // Path to the log file for errors
-        String apiLogFile = BASE_PATH + "logs/api_error.log"; // Path to the log file for API errors
+        Path inputFile = Paths.get(BASE_PATH, "files", "users.csv"); // Path to the input CSV file
+        Path logFile = Paths.get(BASE_PATH, "logs", "csv_error.log"); // Path to the log file for errors
+        Path apiLogFile = Paths.get(BASE_PATH, "logs", "api_error.log"); // Path to the log file for API errors
 
-        // Checking if the log file exists and api log file exists, if not, create them
+        // Ensure log directories and files exist before processing
         createLogFileIfNotExists(logFile);
         createLogFileIfNotExists(apiLogFile);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) { // Try with resources to ensure the reader is closed
+        try (BufferedReader reader = Files.newBufferedReader(inputFile)) { // Try with resources to ensure the reader is closed
 
             String line; // Read the file line by line
 
-            reader.readLine(); // Skip the header line of the CSV file
+            String header = reader.readLine(); // Skip the header line of the CSV file
+            if (header == null) {
+                return; // No data to process
+            }
 
             while ((line = reader.readLine()) != null) { // Process each line of the CSV file using the processLine method
                 try {
@@ -65,24 +69,26 @@ public class FileOperator {
         // I decided to use the printf method to format the output to show the name and the average with two decimal places for better readability. I pulled it from my Java for dumies book and it seemed to be the best to do it without importanting additional libraries.
     } // close the processLine method
 
-    private static void createLogFileIfNotExists(String logFile) { 
-        File file = new File(logFile); // Create a File object for the log file and check if it exists, if not, create a new file
-
+    private static void createLogFileIfNotExists(Path logFile) {
         try {
-            if (!file.exists()) { // If the file does not exist, create a new file
-                file.createNewFile(); // using createNewFile() method to create the log file and if it fails, catch the IOException and print an error message
+            if (logFile.getParent() != null) {
+                Files.createDirectories(logFile.getParent());
             }
-        } catch (IOException e) { // Log the error if the log file cannot be created
-            System.out.println("Could not create log file."); // Printing an error message if an error is thrown while trying to create the log file
+            if (Files.notExists(logFile)) {
+                Files.createFile(logFile);
+            }
+        } catch (IOException e) {
+            System.out.println("Could not create log file: " + e.getMessage());
         }
     } // close the createLogFileIfNotExists method
 
-    private static void logError(String logFile, String message) { // Logging errors to our log file with a timestamp
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) { // ensuring the writer is closed after use and using FileWriter in append mode to add new log entries without overwriting existing ones
+    private static void logError(Path logFile, String message) { // Logging errors to our log file with a timestamp
+        createLogFileIfNotExists(logFile);
+        try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) { // ensuring the writer is closed after use and appending new log entries
             writer.write(new Date() + " - " + message); // Writing the error message to the log file with a timestamp and adding a new line after each log entry
             writer.newLine(); // Adding a new line after each log entry for better readability
         } catch (IOException e) { // Log the error if there is an issue writing to the log file
-            System.out.println("Error writing to log file."); // Printing an error message if an error is thrown while trying to write to the log file
+            System.out.println("Error writing to log file: " + e.getMessage());
         }
     } // close the logError method
 } // close the FileOperator class

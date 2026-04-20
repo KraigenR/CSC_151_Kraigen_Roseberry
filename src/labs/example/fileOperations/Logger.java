@@ -46,6 +46,19 @@ public class Logger {
                 e.printStackTrace(); // Print the stack trace for debugging purposes like before
             }
         } // Closing the reader
+
+        //LAB 14 ADDITIONS
+        // Fourth pass to find disk space errors with line number and IP address 
+        BufferedReader reader4 = openErrorLog(); // Open the log file for the fourth pass
+
+        if (reader4 != null) { // Check if the file was opened successfully
+            getDiskSpaceErrorsWithIPAddress(reader4); // Find disk space errors and print the line number and IP address. Same thing as last week just now adding disk space errors. 
+            try { // Close the reader after the fourth pass
+                reader4.close(); // Closing reader to free up resources
+            } catch (IOException e) { // Same as before, catch any exceptions that may occur while closing the file
+                e.printStackTrace(); // Print the stack trace for debugging purposes like before
+            }
+        } // Closing the reader 
     } // Closing the main method
 
     public static BufferedReader openErrorLog() { // Method to open the log file and return a BufferedReader for reading the file
@@ -149,4 +162,40 @@ public class Logger {
             e.printStackTrace(); // stack trace for debugging purposes
         } // closing our exception handling for reading the file
     } // closing the getMemoryLimitExceededCount method
+
+    // LAB 14 ADDITIONS
+    private static void getDiskSpaceErrorsWithIPAddress(BufferedReader file) { // Method to find disk space errors and capture the line number and IP address for each one
+
+        ArrayList<Integer> lineNumbers = new ArrayList<>(); // List to hold the line numbers where disk space errors occur
+        ArrayList<String> ipAddresses = new ArrayList<>(); // List to hold the IP addresses associated with disk space errors
+
+        String line; // Variable to hold each line read from the file during the counting process
+        int currentLineNumber = 0; // Variable to keep track of the current line number while reading the file
+
+        try { // Try to read through the file line by line and find disk space errors
+            while ((line = file.readLine()) != null) { // Read each line from the file until we reach the end (when readLine returns null)
+                currentLineNumber++; // Increase the line number count each time a new line is read
+
+                if (line.contains("Disk space running low")) { // Check if the line contains a disk space error
+                    String[] parts = line.split(" "); // Split the line into parts using spaces. Were using spaces as the delimiter because in the log format we are using, the IP address is separated from the rest of the log entry by spaces
+
+                    if (parts.length >= 4) { // Make sure the line has enough parts to contain an IP address
+                        String ipAddress = parts[3]; // The IP address is the fourth item in this log format
+
+                        lineNumbers.add(currentLineNumber); // Add the current line number to the lineNumbers list
+                        ipAddresses.add(ipAddress); // Add the IP address to the ipAddresses list
+                    } // closing the if statement that checks if the line has enough parts
+                } // closing the if statement that checks if the line contains a disk space error
+            } // closing the while loop that reads through the file
+
+            System.out.println("\nDisk Space Errors With IP Address:"); // Print a heading before the results
+            for (int i = 0; i < lineNumbers.size(); i++) { // Loop through the stored line numbers and IP addresses
+                System.out.println("Disk space error on line " + lineNumbers.get(i) + " for IP Address: " + ipAddresses.get(i)); // Print the line number and IP address in the required format
+            } // closing the printing loop for line numbers and IP addresses
+
+        } catch (IOException e) { // catching any exceptions that may occur while reading the file
+            System.out.println("Error reading file."); // Same as always, print an error message to the console if there was an issue reading the file
+            e.printStackTrace(); // stack trace for debugging purposes
+        } // closing our exception handling for reading the file
+    } // closing the getDiskSpaceErrorsWithIPAddress method
 } // closing the Logger class

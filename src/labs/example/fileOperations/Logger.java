@@ -83,6 +83,17 @@ public class Logger {
             }
         }
 
+        // Seventh pass to count large response sizes
+        BufferedReader reader7 = openErrorLog("http_access_log"); // Open the HTTP access log file using the overloaded method to analyze response sizes for Lab 14
+        if (reader7 != null) { // Check if the file was opened successfully
+            getResponseSizes(reader7); // Count the number of responses that exceed a certain size threshold in the HTTP access log file. 
+            try { // Close the reader after the seventh pass
+                reader7.close(); // Closing reader to free up resources
+            } catch (IOException e) { // Same as before, catch any exceptions that may occur while closing the file
+                e.printStackTrace(); // Print the stack trace for debugging purposes like before
+            } // Closing the reader for the HTTP access log file after analyzing response sizes
+        } // Closing the if statement that checks if the reader was opened successfully for the seventh pass
+
     } // Closing the main method
 
     public static BufferedReader openErrorLog() { // Method to open the log file and return a BufferedReader for reading the file
@@ -249,7 +260,7 @@ public class Logger {
         while ((line = file.readLine()) != null) { // Read each line from the file until we reach the end (when readLine returns null)
             String[] parts = line.split(" "); // Split the line into parts using spaces
 
-            if (parts.length >= 4) { // Make sure the line has enough parts to contain the timestamp and GMT offset
+            if (parts.length >= 5) { // Make sure the line has enough parts to contain the timestamp and GMT offset
                 //String timePart = parts[3]; // Example of what we are targeting: [04/Apr/2025:10:13:07 // This is commented out because we aren't using the time port but I want to keep it for the future just in case it's needed. 
                 String offsetPart = parts[4]; // Example of this targeting: +0900]
 
@@ -291,7 +302,7 @@ public class Logger {
                     String statusCodeStr = parts[8]; // The HTTP status code is typically the ninth part of the log entry in this format
 
                     try { // Try to parse the status code as an integer
-                        int statusCode = Integer.parseInt(parts[8]); // Extract HTTP status code
+                        int statusCode = Integer.parseInt(statusCodeStr); // Extract HTTP status code
 
                         if (statusCode >= 200 && statusCode < 300) { // Check if it's a 2xx status code
                             count2xx++; // Increment the 2xx counter
@@ -318,4 +329,34 @@ public class Logger {
             e.printStackTrace(); // Print the stack trace for debugging purposes
         } // closing our exception handling for reading the file
     } // closing the getHTTPCodes method
+
+    private static void getResponseSizes(BufferedReader file) { // Method to count response sizes greater than 3900 bytes
+        int count = 0; // Counter for response sizes greater than 3900
+        String line; // Variable to hold each line read from the file
+        try { // Try to read through the file line by line and count response sizes greater than 3900 bytes
+            while ((line = file.readLine()) != null) { // Read each line from the file until we reach the end (when readLine returns null)
+                String[] parts = line.split(" "); // Split the line into parts using spaces
+
+                if (parts.length >= 10) { // Make sure the line has enough parts to contain the response size
+                    String sizeStr = parts[9]; // Response size is the 10th element
+
+
+                    try { // Try to parse the response size as an integer
+                        int size = Integer.parseInt(sizeStr); // Convert to integer
+                        if (size > 3900) { // Check if the response size is greater than 3900 bytes
+                            count++; // Increment the counter for large response sizes
+                        } // If the response size is not greater than 3900 bytes, we simply ignore it and move on to the next line without incrementing the counter
+                    } catch (NumberFormatException e) { // Catch any exceptions that may occur while parsing the response size as an integer
+                        System.out.println("Invalid response size: " + sizeStr); // Print an error message if the response size is not a valid integer
+                    } // closing our exception handling for parsing the response size
+                } // closing the if statement that checks if the line has enough parts
+            } // closing the while loop that reads through the file
+
+            System.out.println("\nResponse Size Count:"); // Print a heading before the result
+            System.out.println("Number of responses greater than 3900 bytes: " + count); // Print the count of responses greater than 3900 bytes
+        } catch (IOException e) { // Catch any exceptions that may occur while reading the file
+            System.out.println("Error reading file."); // Print an error message if there was an issue reading the file
+            e.printStackTrace(); // Print the stack trace for debugging purposes
+        } // closing our exception handling for reading the file
+    } // closing the getResponseSizes method
 } // closing the Logger class

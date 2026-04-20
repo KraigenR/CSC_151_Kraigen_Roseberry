@@ -9,6 +9,7 @@ public class Logger {
 
     private static final String BASE_PATH = "src/labs/example/fileOperations/"; // Base structure for file path
     private static final String API_LOG_FILE = BASE_PATH + "logs/api_error.log"; // Location of the log file
+    private static final String HTTP_LOG_FILE = BASE_PATH + "logs/http_access_log.log"; // Location of the HTTP access log file adding for Week 14 Lab
 
     public static void main(String[] args) {
         // First pass to print the log file
@@ -59,6 +60,18 @@ public class Logger {
                 e.printStackTrace(); // Print the stack trace for debugging purposes like before
             }
         } // Closing the reader 
+
+        // Fifth pass to count GMT offsets in the HTTP access log file for Lab 14
+        BufferedReader reader5 = openErrorLog("http_access_log"); // Open the HTTP access log file using the overloaded method
+        if (reader5 != null) { // Check if the file was opened successfully
+            getGMTOffset(reader5); // Count the number of times each GMT offset appears in the HTTP access log file
+            try { // Close the reader after the fifth pass
+                reader5.close(); // Closing reader to free up resources
+                } catch (IOException e) { // Same as before, catch any exceptions that may occur while closing the file
+                    e.printStackTrace(); // Print the stack trace for debugging purposes like before
+                }
+        } // Closing the reader for the HTTP access log file
+
     } // Closing the main method
 
     public static BufferedReader openErrorLog() { // Method to open the log file and return a BufferedReader for reading the file
@@ -70,6 +83,21 @@ public class Logger {
             return null; // Return null if there was an error opening the file, which allows the calling code to handle this case appropriately
         } // closing our exception handling for opening the file
     } // closing the openErrorLog method
+
+    public static BufferedReader openErrorLog(String fileType) { // Overloaded method for Lab 14
+        try {
+        if ("http_access_log".equals(fileType)) { // Check if correct argument. We using http_access_log as the argument to specify that we want to open the HTTP access log file instead of the API error log file. If the argument matches, we open the HTTP access log file and return a BufferedReader for it.
+            return new BufferedReader(new FileReader(HTTP_LOG_FILE)); // Open HTTP log file and return a BufferedReader for it
+        } else { // If the argument does not match the expected value, we print an error message and return null to indicate that the file could not be opened
+            System.out.println("Invalid file type: " + fileType); // just printing an error message to the console
+            return null; // Return null to indicate that the file could not be opened due to an invalid file type argument
+        } // closing the if-else statement that checks the file type argument
+            } catch (IOException e) { // catch any IOException that may occur if the file cannot be found or opened
+            System.out.println("Error opening file: " + fileType); // Printing an error message to the console if the file cannot be opened but including the file type argument for clarity
+            e.printStackTrace(); // normal debugging purposes
+            return null;
+        } // closing our exception handling for opening the file
+    } // closing the overloaded openErrorLog method
 
     public static void printLogFile(BufferedReader file) { // Method to read the log file and print each line to the console
         String line; // Variable to hold each line read from the file while printing
@@ -198,4 +226,42 @@ public class Logger {
             e.printStackTrace(); // stack trace for debugging purposes
         } // closing our exception handling for reading the file
     } // closing the getDiskSpaceErrorsWithIPAddress method
+
+    private static void getGMTOffset(BufferedReader file) { // Method to find and count each distinct GMT offset in the HTTP access log file
+
+    ArrayList<String> gmtOffsets = new ArrayList<>(); // List to hold the distinct GMT offsets found in the file
+    ArrayList<Integer> counts = new ArrayList<>(); // List to hold the counts for each GMT offset
+
+    String line; // Variable to hold each line read from the file during the counting process
+
+    try { // Try to read through the file line by line and count the GMT offsets
+        while ((line = file.readLine()) != null) { // Read each line from the file until we reach the end (when readLine returns null)
+            String[] parts = line.split(" "); // Split the line into parts using spaces
+
+            if (parts.length >= 4) { // Make sure the line has enough parts to contain the timestamp and GMT offset
+                String timePart = parts[3]; // Example of what we are targeting: [04/Apr/2025:10:13:07
+                String offsetPart = parts[4]; // Example of this targeting: +0900]
+
+                String gmtOffset = offsetPart.replace("]", ""); // Remove the closing bracket from the GMT offset
+
+                if (gmtOffsets.contains(gmtOffset)) { // Check if this GMT offset is already in the list
+                    int i = gmtOffsets.indexOf(gmtOffset); // Find the index of the GMT offset in the list
+                    counts.set(i, counts.get(i) + 1); // Increment the count for this GMT offset
+                } else { // If this GMT offset is not already in the list, add it and start the count at 1
+                    gmtOffsets.add(gmtOffset); // Add the new GMT offset to the list
+                    counts.add(1); // Add a count of 1 for this new GMT offset
+                } // closing if-else statement that checks whether the GMT offset is already in the list
+            } // closing the if statement that checks if the line has enough parts
+        } // closing the while loop that reads through the file
+
+        System.out.println("\nGMT Offset Counts:"); // Print a heading before the results
+        for (int i = 0; i < gmtOffsets.size(); i++) { // Loop through the GMT offsets and their counts
+            System.out.println(gmtOffsets.get(i) + ": " + counts.get(i)); // Print each GMT offset and its count
+        } // closing the printing loop for GMT offsets and counts
+
+    } catch (IOException e) { // catching any exceptions that may occur while reading the file
+        System.out.println("Error reading file."); // Same as always, print an error message to the console if there was an issue reading the file
+        e.printStackTrace(); // stack trace for debugging purposes
+    } // closing our exception handling for reading the file
+} // closing the getGMTOffset method
 } // closing the Logger class

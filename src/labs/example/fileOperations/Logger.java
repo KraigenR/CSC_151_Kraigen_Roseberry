@@ -72,7 +72,7 @@ public class Logger {
                 }
         } // Closing the reader for the HTTP access log file
 
-        // Sixth pass to count HTTP satus codes for lab 14
+        // Sixth pass to count HTTP status codes for Lab 14
         BufferedReader reader6 = openErrorLog("http_access_log"); // Open the HTTP access log file using the overloaded method
         if (reader6 != null) { // Check if the file was opened successfully
             getHTTPCodes(reader6); // Count the number of times each HTTP status code appears in the HTTP access log file
@@ -94,7 +94,7 @@ public class Logger {
             } // Closing the reader for the HTTP access log file after analyzing response sizes
         } // Closing the if statement that checks if the reader was opened successfully for the seventh pass
 
-        // Eighth pass to group HTTP methods and endpoints
+        // Eighth pass to group distinct HTTP methods
         BufferedReader reader8 = openErrorLog("http_access_log"); // Open the HTTP access log file using the overloaded method
         if (reader8 != null) { // Check if the file was opened successfully
             groupHTTPMethodsAndEndPoints(reader8); // Find each distinct HTTP method in the file and print it only once
@@ -313,7 +313,7 @@ public class Logger {
                     String statusCodeStr = parts[8]; // The HTTP status code is typically the ninth part of the log entry in this format
 
                     try { // Try to parse the status code as an integer
-                        int statusCode = Integer.parseInt(statusCodeStr); // Extract HTTP status code
+                        int statusCode = Integer.parseInt(statusCodeStr.trim()); 
 
                         if (statusCode >= 200 && statusCode < 300) { // Check if it's a 2xx status code
                             count2xx++; // Increment the 2xx counter
@@ -325,7 +325,7 @@ public class Logger {
                             count5xx++; // Increment the 5xx counter
                         } // If the status code does not fall into any of these ranges, we simply ignore it and move on to the next line without incrementing any counters
                     } catch (NumberFormatException e) { // Catch any exceptions that may occur while parsing the status code as an integer
-                        System.out.println("Invalid status code: " + statusCodeStr); // Print an error message if the status code is not a valid integer
+                            // If there was an issue parsing the status code, we can choose to ignore this line and continue processing the rest of the file without incrementing any counters
                     } // closing our exception handling for parsing the status code
                 } // closing the if statement that checks if the line has enough parts
             } // closing the while loop that reads through the file
@@ -353,7 +353,7 @@ public class Logger {
 
 
                     try { // Try to parse the response size as an integer
-                        int size = Integer.parseInt(sizeStr.trim()); // Convert to integer
+                        int size = Integer.parseInt(sizeStr.trim()); // Convert to integer 
                         if (size > 3900) { // Check if the response size is greater than 3900 bytes
                             count++; // Increment the counter for large response sizes
                         } // If the response size is not greater than 3900 bytes, we simply ignore it and move on to the next line without incrementing the counter

@@ -94,6 +94,17 @@ public class Logger {
             } // Closing the reader for the HTTP access log file after analyzing response sizes
         } // Closing the if statement that checks if the reader was opened successfully for the seventh pass
 
+        // Eighth pass to group HTTP methods and endpoints
+        BufferedReader reader8 = openErrorLog("http_access_log"); // Open the HTTP access log file using the overloaded method
+        if (reader8 != null) { // Check if the file was opened successfully
+            groupHTTPMethodsAndEndPoints(reader8); // Find each distinct HTTP method in the file and print it only once
+            try { // Close the reader after the eighth pass
+                reader8.close(); // Closing reader to free up resources
+            } catch (IOException e) { // Same as before, catch any exceptions that may occur while closing the file
+                e.printStackTrace(); // Print the stack trace for debugging purposes like before
+            } // Closing the reader for the HTTP access log file after grouping HTTP methods and endpoints
+        } // Closing the if statement that checks if the reader was opened successfully for the eighth pass
+
     } // Closing the main method
 
     public static BufferedReader openErrorLog() { // Method to open the log file and return a BufferedReader for reading the file
@@ -342,13 +353,12 @@ public class Logger {
 
 
                     try { // Try to parse the response size as an integer
-                        int size = Integer.parseInt(sizeStr); // Convert to integer
+                        int size = Integer.parseInt(sizeStr.trim()); // Convert to integer
                         if (size > 3900) { // Check if the response size is greater than 3900 bytes
                             count++; // Increment the counter for large response sizes
                         } // If the response size is not greater than 3900 bytes, we simply ignore it and move on to the next line without incrementing the counter
                     } catch (NumberFormatException e) { // Catch any exceptions that may occur while parsing the response size as an integer
-                        System.out.println("Invalid response size: " + sizeStr); // Print an error message if the response size is not a valid integer
-                    } // closing our exception handling for parsing the response size
+                        } // closing our exception handling for parsing the response size
                 } // closing the if statement that checks if the line has enough parts
             } // closing the while loop that reads through the file
 
@@ -359,4 +369,37 @@ public class Logger {
             e.printStackTrace(); // Print the stack trace for debugging purposes
         } // closing our exception handling for reading the file
     } // closing the getResponseSizes method
+
+    private static void groupHTTPMethodsAndEndPoints(BufferedReader file) { // Method to find all distinct HTTP verbs in the HTTP access log file
+
+    ArrayList<String> httpMethods = new ArrayList<>(); // List to hold each distinct HTTP method found in the file
+
+    String line; // Variable to hold each line read from the file during the process
+
+    try { // Try to read through the file line by line and find the distinct HTTP methods
+        while ((line = file.readLine()) != null) { // Read each line from the file until we reach the end (when readLine returns null)
+            int firstQuote = line.indexOf("\""); // Find the first quotation mark in the line
+            int secondQuote = line.indexOf("\"", firstQuote + 1); // Find the second quotation mark in the line
+            if (firstQuote != -1 && secondQuote != -1) { // Make sure both quotation marks were found
+                String requestPart = line.substring(firstQuote + 1, secondQuote); // Extract the request portion, for example: DELETE /api/product/123 HTTP/1.1
+                String[] requestParts = requestPart.split(" "); // Split the request portion into parts using spaces
+                if (requestParts.length >= 1) { // Make sure there is at least one part in the request
+                    String httpMethod = requestParts[0]; // The HTTP method is the first part of the request
+                    if (!httpMethods.contains(httpMethod)) { // Check if this HTTP method is already in the list
+                        httpMethods.add(httpMethod); // Add the HTTP method only if it has not been seen before
+                    } // closing the if statement that checks whether the HTTP method is already in the list
+                } // closing the if statement that checks if there is at least one part in the request
+            } // closing the if statement that checks if both quotation marks were found in the line
+        } // closing the while loop that reads through the file
+
+        System.out.println("\nDistinct HTTP Methods:"); // Print a heading before the results
+        for (int i = 0; i < httpMethods.size(); i++) { // Loop through the distinct HTTP methods
+            System.out.println(httpMethods.get(i)); // Print each HTTP method only one time
+        } // closing the printing loop for distinct HTTP methods
+
+    } catch (IOException e) { // Catch any exceptions that may occur while reading the file
+        System.out.println("Error reading file."); // Print an error message if there was an issue reading the file
+        e.printStackTrace(); // Print the stack trace for debugging purposes
+    } // closing our exception handling for reading the file
+} // closing the groupHTTPMethodsAndEndPoints method
 } // closing the Logger class

@@ -9,7 +9,7 @@ public class Logger {
 
     private static final String BASE_PATH = "src/labs/example/fileOperations/"; // Base structure for file path
     private static final String API_LOG_FILE = BASE_PATH + "logs/api_error.log"; // Location of the log file
-    private static final String HTTP_LOG_FILE = BASE_PATH + "logs/http_access_log.log"; // Location of the HTTP access log file adding for Week 14 Lab
+    private static final String HTTP_LOG_FILE = BASE_PATH + "logs/http_access.log"; // Location of the HTTP access log file adding for Week 14 Lab
 
     public static void main(String[] args) {
         // First pass to print the log file
@@ -71,6 +71,17 @@ public class Logger {
                     e.printStackTrace(); // Print the stack trace for debugging purposes like before
                 }
         } // Closing the reader for the HTTP access log file
+
+        // Sixth pass to count HTTP satus codes for lab 14
+        BufferedReader reader6 = openErrorLog("http_access_log"); // Open the HTTP access log file using the overloaded method
+        if (reader6 != null) { // Check if the file was opened successfully
+            getHTTPCodes(reader6); // Count the number of times each HTTP status code appears in the HTTP access log file
+            try { // Close the reader after the sixth pass
+                reader6.close(); // Closing reader to free up resources
+            } catch (IOException e) { // Same as before, catch any exceptions that may occur while closing the file
+                e.printStackTrace(); // Print the stack trace for debugging purposes like before
+            }
+        }
 
     } // Closing the main method
 
@@ -207,7 +218,7 @@ public class Logger {
                 if (line.contains("Disk space running low")) { // Check if the line contains a disk space error
                     String[] parts = line.split(" "); // Split the line into parts using spaces. Were using spaces as the delimiter because in the log format we are using, the IP address is separated from the rest of the log entry by spaces
 
-                    if (parts.length >= 4) { // Make sure the line has enough parts to contain an IP address
+                    if (parts.length >= 5) { // Make sure the line has enough parts to contain an IP address. Changed from >= 4 to >= 5 because we need to account for the fact that the IP address is the fourth item in the log entry, and we want to make sure there are at least 5 parts to avoid an ArrayIndexOutOfBoundsException when we try to access parts[3]
                         String ipAddress = parts[3]; // The IP address is the fourth item in this log format
 
                         lineNumbers.add(currentLineNumber); // Add the current line number to the lineNumbers list
@@ -239,7 +250,7 @@ public class Logger {
             String[] parts = line.split(" "); // Split the line into parts using spaces
 
             if (parts.length >= 4) { // Make sure the line has enough parts to contain the timestamp and GMT offset
-                String timePart = parts[3]; // Example of what we are targeting: [04/Apr/2025:10:13:07
+                //String timePart = parts[3]; // Example of what we are targeting: [04/Apr/2025:10:13:07 // This is commented out because we aren't using the time port but I want to keep it for the future just in case it's needed. 
                 String offsetPart = parts[4]; // Example of this targeting: +0900]
 
                 String gmtOffset = offsetPart.replace("]", ""); // Remove the closing bracket from the GMT offset
@@ -264,4 +275,47 @@ public class Logger {
         e.printStackTrace(); // stack trace for debugging purposes
     } // closing our exception handling for reading the file
 } // closing the getGMTOffset method
+
+    private static void getHTTPCodes(BufferedReader file) { // Method to count HTTP status code ranges
+        int count2xx = 0; // Counter for 2xx status codes
+        int count3xx = 0; // Counter for 3xx status codes
+        int count4xx = 0; // Counter for 4xx status codes
+        int count5xx = 0; // Counter for 5xx status codes
+
+        String line; // Variable to hold each line read from the file during the counting process
+        try { // Try to read through the file line by line and count the HTTP status codes
+            while ((line = file.readLine()) != null) { // Read each line from the file until we reach the end (when readLine returns null)
+                String[] parts = line.split(" "); // Split the line into parts using spaces
+
+                if (parts.length >= 9) { // Make sure the line has enough parts to contain the HTTP status code
+                    String statusCodeStr = parts[8]; // The HTTP status code is typically the ninth part of the log entry in this format
+
+                    try { // Try to parse the status code as an integer
+                        int statusCode = Integer.parseInt(parts[8]); // Extract HTTP status code
+
+                        if (statusCode >= 200 && statusCode < 300) { // Check if it's a 2xx status code
+                            count2xx++; // Increment the 2xx counter
+                        } else if (statusCode >= 300 && statusCode < 400) { // Check if it's a 3xx status code
+                            count3xx++; // Increment the 3xx counter
+                        } else if (statusCode >= 400 && statusCode < 500) { // Check if it's a 4xx status code
+                            count4xx++; // Increment the 4xx counter
+                        } else if (statusCode >= 500 && statusCode < 600) { // Check if it's a 5xx status code
+                            count5xx++; // Increment the 5xx counter
+                        } // If the status code does not fall into any of these ranges, we simply ignore it and move on to the next line without incrementing any counters
+                    } catch (NumberFormatException e) { // Catch any exceptions that may occur while parsing the status code as an integer
+                        System.out.println("Invalid status code: " + statusCodeStr); // Print an error message if the status code is not a valid integer
+                    } // closing our exception handling for parsing the status code
+                } // closing the if statement that checks if the line has enough parts
+            } // closing the while loop that reads through the file
+
+            System.out.println("\nHTTP Status Code Counts:"); // Print a heading before the results
+            System.out.println("5xx Errors: " + count5xx); // Print the count of 5xx status codes
+            System.out.println("4xx Errors: " + count4xx); // Print the count of 4xx status codes
+            System.out.println("3xx Errors: " + count3xx); // Print the count of 3xx status codes
+            System.out.println("2xx Errors: " + count2xx); // Print the count of 2xx status codes
+        } catch (IOException e) { // Catch any exceptions that may occur while reading the file
+            System.out.println("Error reading file."); // Print an error message if there was an issue reading the file
+            e.printStackTrace(); // Print the stack trace for debugging purposes
+        } // closing our exception handling for reading the file
+    } // closing the getHTTPCodes method
 } // closing the Logger class

@@ -2,7 +2,7 @@ package labs.example.chatbot;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
+// import java.util.*; // was throwing a problem so just removed it since it is not needed for this code
 
 public class Server {
     public static void main(String[] args) {

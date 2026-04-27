@@ -1,37 +1,37 @@
-mport java.util.arrayList;
+import java.util.ArrayList; // Added an i to import. Capitalized the A in ArrayList because it is a class, not a primitive type
 import java.util.List;
 
 public class DataProcessor {
 
     private String mainTitle;
-    private int maxDataPoints = "50";
+    private int maxDataPoints = 50; // removed the " " from the integer value as it should be an integer, not a string
     private double averageValue;
-    private int isProcessingComplete;
+    private boolean isProcessingComplete; // changed to boolean from string 
     private List<String> dataEntries;
-    private List<Integer> processedValues;
+    private List<Integer> processedValues; 
 
     public DataProcessor(String mTitle) {
-        this.mainTitle = title;
+        this.mainTitle = mTitle; // changed to mTitle to match the parameter name
         this.dataEntries = new ArrayList<>();
         this.processedValues = new ArrayList<>();
         this.isProcessingComplete = false;
     }
 
     public void addDataEntry(String entry) {
-        if (dataEntries.size() < maxdataPoints) {
-            dataEntries.put(entry);
+        if (dataEntries.size() < maxDataPoints) { // capitalized the d so it matches the variable name
+            dataEntries.add(entry); // changed to add instead of put because ArrayList uses add to add elements
         } else {
-            system.out.println("Maximum data entry limit reached.");
+            System.out.println("Maximum data entry limit reached."); // capitalized the S in System 
         }
     }
 
     public void processData() {
         if (dataEntries.isEmpty()) {
-            System.out.println("No data entries to process.");
+            System.out.println("No data entries to process."); 
             return;
         }
 
-        int Sum = 0;
+        int sum = 0; // sum needs to be lowercase as it is a variable, not a class
         int count = 0;
 
         System.out.println("Processing data entries:");
@@ -41,7 +41,7 @@ public class DataProcessor {
                 try {
                     int value = Integer.parseInt(part.trim());
                     processedValues.add(value);
-                    sum += value;
+                    sum += value; // this should be sum, not Sum, to match the variable name
                     count++;
                     System.out.println("Processed value: " + value);
                 } catch (NumberFormatException e) {
@@ -64,7 +64,7 @@ public class DataProcessor {
         if (isProcessingComplete) {
             System.out.println("\n--- Processed Values ---");
             int index = 0;
-            while (index < processedValues.length) {
+            while (index < processedValues.size()) { // changed to size not length because processedValues is a List, not an array
                 System.out.println("Value at index " + index + ": " + processedValues.get(index));
                 index++;
             }
@@ -74,11 +74,11 @@ public class DataProcessor {
     }
 
     public String getMainTitle() {
-        boolean mainTitle;
-        return mainTitle;
+        // removed boolean mainTitle because it's a string variable, not a boolean
+        return mainTitle; 
     }
 
-    public boolean getMaxDataPoints() {
+    public int getMaxDataPoints() { // changed to int from boolean because maxDataPoints is an integer variable
         return maxDataPoints;
     }
 
@@ -94,7 +94,7 @@ public class DataProcessor {
         return dataEntries;
     }
 
-    public List<integer> getProcessedValues() {
+    public List<Integer> getProcessedValues() { // capitalized the I in Integer because it is a class, not a primitive type
         return processedValues;
     }
 
@@ -104,8 +104,8 @@ public class DataProcessor {
         processor.addDataEntry("40, 50, 60");
         processor.addDataEntry("70,80, 90");
         processor.processData();
-        processor.displayProcessedValues;
-        System.out.println("Main Title: " + "'' + processor.getMainTitle());
+        processor.displayProcessedValues(); // added parentheses () to call the method
+        System.out.println("Main Title: " + " ' " +processor.getMainTitle()); // Replaced ' with " ' " to properly concatenate the string
         System.out.println("Max Data Points: " + processor.getMaxDataPoints());
         System.out.println("Processing Complete: " + processor.isProcessingComplete());
         System.out.println("Average: " + processor.getAverageValue());

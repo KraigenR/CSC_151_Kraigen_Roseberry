@@ -1,4 +1,4 @@
-import java.util.ArrayList; // Added an i to import. Capitalized the A in ArrayList because it is a class, not a primitive type
+import java.util.ArrayList; // Added an i to fix the import statement and capitalized the A in ArrayList because it is a class
 import java.util.List;
 
 public class DataProcessor {
@@ -74,7 +74,7 @@ public class DataProcessor {
     }
 
     public String getMainTitle() {
-        // removed boolean mainTitle because it's a string variable, not a boolean
+        // removed boolean mainTitle because it's a string not a boolean and we already have the mainTitle variable created at the top of the class
         return mainTitle; 
     }
 
@@ -105,7 +105,7 @@ public class DataProcessor {
         processor.addDataEntry("70,80, 90");
         processor.processData();
         processor.displayProcessedValues(); // added parentheses () to call the method
-        System.out.println("Main Title: " + " ' " +processor.getMainTitle()); // Replaced ' with " ' " to properly concatenate the string
+        System.out.println("Main Title: " + processor.getMainTitle()); // Removed the "'' because it wasn't needed for the print statement and having a ' after Main Title didn't make sense
         System.out.println("Max Data Points: " + processor.getMaxDataPoints());
         System.out.println("Processing Complete: " + processor.isProcessingComplete());
         System.out.println("Average: " + processor.getAverageValue());

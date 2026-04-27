@@ -1,4 +1,5 @@
-import java.util.ArrayList; // Added an i to fix the import statement and capitalized the A in ArrayList because it is a class
+// Whenever I try and add package labs.example.ai_generated; or any sort of package line VSC flips out on me. I am going to submit without, but I am going to being trying to figure out why that is the case after. 
+import java.util.ArrayList; // Fixed the import statement by adding an i and capitalized ArrayList because it is a class
 import java.util.List;
 
 public class DataProcessor {
@@ -74,7 +75,7 @@ public class DataProcessor {
     }
 
     public String getMainTitle() {
-        // removed boolean mainTitle because it's a string not a boolean and we already have the mainTitle variable created at the top of the class
+        // removed boolean mainTitle because mainTitle is already declared as a String at the top of the class
         return mainTitle; 
     }
 

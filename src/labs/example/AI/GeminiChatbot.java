@@ -18,7 +18,7 @@ public class GeminiChatbot {
         // Do not share this key or submit screenshots with it visible.
         String apiKey = "AIzaSyA98kzSn3DG8P5SjLS3YSuyBeOwTpCT7xk";
 
-        System.out.println("Simple Chatbot using Gemini 2.0 Flash API");
+        System.out.println("Simple Chatbot using Gemini 2.5 Flash API");
         System.out.println("------------------------------------------------------");
         System.out.println("Type 'exit' to quit.");
 
@@ -43,7 +43,7 @@ public class GeminiChatbot {
     }
 
     public static String callGeminiAPI(String userInput, String apiKey) throws IOException, URISyntaxException {
-        String urlString = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + apiKey;
+        String urlString = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
 
         URI uri = new URI(urlString);
         URL url = uri.toURL();

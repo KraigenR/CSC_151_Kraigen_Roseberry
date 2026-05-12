@@ -14,10 +14,12 @@ public class GeminiChatbot {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        String apiKey = "AIzaSyC_APKaBFaPSd1DdOtcJ2tfaqZ8R79W6NQ";
+        // Paste your API key between the quotation marks.
+        // Do not share this key or submit screenshots with it visible.
+        String apiKey = "PASTE_YOUR_API_KEY_HERE";
 
         System.out.println("Simple Chatbot using Gemini 2.0 Flash API");
-        System.out.println("------------------------------------------");
+        System.out.println("------------------------------------------------------");
         System.out.println("Type 'exit' to quit.");
 
         while (true) {
@@ -30,10 +32,8 @@ public class GeminiChatbot {
             }
 
             try {
-                String response = callGeminiAPI(userInput, apiKey);
-                String responseText = extractTextFromJson(response);
-
-                System.out.println("Gemini: " + responseText);
+                String geminiResponse = callGeminiAPI(userInput, apiKey);
+                System.out.println("Gemini: " + geminiResponse);
             } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
             }
@@ -71,9 +71,11 @@ public class GeminiChatbot {
             outputStream.write(input, 0, input.length);
         }
 
+        int responseCode = connection.getResponseCode();
+
         BufferedReader reader;
 
-        if (connection.getResponseCode() >= 200 && connection.getResponseCode() < 300) {
+        if (responseCode >= 200 && responseCode < 300) {
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
         } else {
             reader = new BufferedReader(new InputStreamReader(connection.getErrorStream(), StandardCharsets.UTF_8));
@@ -89,36 +91,105 @@ public class GeminiChatbot {
         reader.close();
         connection.disconnect();
 
-        return response.toString();
+        String jsonResponse = response.toString();
+
+        if (responseCode >= 200 && responseCode < 300) {
+            return extractTextFromJson(jsonResponse);
+        } else {
+            String errorMessage = extractJsonStringValue(jsonResponse, "message");
+            return "API error " + responseCode + ": " + errorMessage;
+        }
     }
 
     public static String extractTextFromJson(String jsonResponse) {
-        String searchText = "\"text\": \"";
-        int startIndex = jsonResponse.indexOf(searchText);
+        String responseText = extractJsonStringValue(jsonResponse, "text");
 
-        if (startIndex == -1) {
-            return "Could not find response text in JSON.";
+        if (responseText.equals("")) {
+            return "Could not find response text in JSON. Check your API key, model name, and request format.";
         }
-
-        startIndex = startIndex + searchText.length();
-
-        int endIndex = jsonResponse.indexOf("\"", startIndex);
-
-        if (endIndex == -1) {
-            return "Could not find the end of the response text.";
-        }
-
-        String responseText = jsonResponse.substring(startIndex, endIndex);
-
-        responseText = responseText.replace("\\n", "\n");
-        responseText = responseText.replace("\\\"", "\"");
-        responseText = responseText.replace("\\\\", "\\");
 
         return responseText;
     }
 
+    public static String extractJsonStringValue(String jsonResponse, String fieldName) {
+        String searchText = "\"" + fieldName + "\"";
+        int fieldIndex = jsonResponse.indexOf(searchText);
+
+        if (fieldIndex == -1) {
+            return "";
+        }
+
+        int colonIndex = jsonResponse.indexOf(":", fieldIndex);
+
+        if (colonIndex == -1) {
+            return "";
+        }
+
+        int startQuoteIndex = jsonResponse.indexOf("\"", colonIndex);
+
+        if (startQuoteIndex == -1) {
+            return "";
+        }
+
+        int startIndex = startQuoteIndex + 1;
+
+        StringBuilder value = new StringBuilder();
+        boolean escaped = false;
+
+        for (int i = startIndex; i < jsonResponse.length(); i++) {
+            char currentChar = jsonResponse.charAt(i);
+
+            if (escaped) {
+                if (currentChar == 'n') {
+                    value.append("\n");
+                } else if (currentChar == 't') {
+                    value.append("\t");
+                } else if (currentChar == 'r') {
+                    value.append("\r");
+                } else if (currentChar == '"') {
+                    value.append("\"");
+                } else if (currentChar == '\\') {
+                    value.append("\\");
+                } else {
+                    value.append(currentChar);
+                }
+
+                escaped = false;
+            } else {
+                if (currentChar == '\\') {
+                    escaped = true;
+                } else if (currentChar == '"') {
+                    break;
+                } else {
+                    value.append(currentChar);
+                }
+            }
+        }
+
+        return value.toString();
+    }
+
     public static String escapeJson(String text) {
-        return text.replace("\\", "\\\\")
-                   .replace("\"", "\\\"");
+        StringBuilder escapedText = new StringBuilder();
+
+        for (int i = 0; i < text.length(); i++) {
+            char currentChar = text.charAt(i);
+
+            if (currentChar == '\\') {
+                escapedText.append("\\\\");
+            } else if (currentChar == '"') {
+                escapedText.append("\\\"");
+            } else if (currentChar == '\n') {
+                escapedText.append("\\n");
+            } else if (currentChar == '\r') {
+                escapedText.append("\\r");
+            } else if (currentChar == '\t') {
+                escapedText.append("\\t");
+            } else {
+                escapedText.append(currentChar);
+            }
+        }
+
+        return escapedText.toString();
     }
 }

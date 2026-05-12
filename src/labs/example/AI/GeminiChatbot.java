@@ -16,7 +16,7 @@ public class GeminiChatbot {
         Scanner scanner = new Scanner(System.in); // Scanner for reading user input from the console
 
 
-        String apiKey = "AIzaSyDpbgLSXS_j9nD5s3yATAkaHiUmWBa2Wno"; // I had to pay for an API key as I ran out of free credits. Please replace this with your own API key if you plan on running this code past just a test. 
+        String apiKey = "Insert your API key here"; // I had to pay for an API key as I ran out of free credits. Please replace this with your own API key if you plan on running this code past just a test. 
 
         System.out.println("Simple Chatbot using Gemini 2.5 Flash-Lite API");  // This is out initial greeting when the chatbot starts. I ended up having to use Gemini 2.5 Flash-Lite because of API key issues with Gemini 2.0 Flash. Additionally I kept getting "API error 503: This model is currently experiencing high demand." causing me to switch to Lite.
         System.out.println("------------------------------------------------------"); // Just a separator for better readability in the console

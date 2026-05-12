@@ -16,7 +16,7 @@ public class GeminiChatbot {
 
         // Paste your API key between the quotation marks.
         // Do not share this key or submit screenshots with it visible.
-        String apiKey = "AIzaSyBCL8ViTcQwjlr65mKgyW9DmIod73aOG7A";
+        String apiKey = "AIzaSyA98kzSn3DG8P5SjLS3YSuyBeOwTpCT7xk";
 
         System.out.println("Simple Chatbot using Gemini 2.0 Flash API");
         System.out.println("------------------------------------------------------");
